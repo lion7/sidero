@@ -25,6 +25,7 @@ import (
 	infrav1alpha3 "github.com/talos-systems/sidero/app/caps-controller-manager/api/v1alpha3"
 	"github.com/talos-systems/sidero/app/caps-controller-manager/controllers"
 	metalv1alpha1 "github.com/talos-systems/sidero/app/sidero-controller-manager/api/v1alpha1"
+	metalv1alpha2 "github.com/talos-systems/sidero/app/sidero-controller-manager/api/v1alpha2"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -45,6 +46,7 @@ func init() {
 	_ = infrav1alpha2.AddToScheme(scheme)
 	_ = infrav1alpha3.AddToScheme(scheme)
 	_ = metalv1alpha1.AddToScheme(scheme)
+	_ = metalv1alpha2.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme
 }
 
