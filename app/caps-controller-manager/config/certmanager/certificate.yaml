@@ -3,7 +3,7 @@
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: selfsigned-issuer
+  name: caps-selfsigned-issuer
   namespace: system
 spec:
   selfSigned: {}
@@ -11,14 +11,14 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: serving-cert # this name should match the one appeared in kustomizeconfig.yaml
+  name: caps-serving-cert # this name should match the one appeared in kustomizeconfig.yaml
   namespace: system
 spec:
-  # $(SERVICE_NAME) and $(SERVICE_NAMESPACE) will be substituted by kustomize
+  # $(CAPS_WEBHOOK_SERVICE_NAME) and $(CAPS_WEBHOOK_SERVICE_NAMESPACE) will be substituted by kustomize
   dnsNames:
-    - $(SERVICE_NAME).$(SERVICE_NAMESPACE).svc
-    - $(SERVICE_NAME).$(SERVICE_NAMESPACE).svc.cluster.local
+    - $(CAPS_WEBHOOK_SERVICE_NAME).$(CAPS_WEBHOOK_SERVICE_NAMESPACE).svc
+    - $(CAPS_WEBHOOK_SERVICE_NAME).$(CAPS_WEBHOOK_SERVICE_NAMESPACE).svc.cluster.local
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
-  secretName: $(SERVICE_NAME)-cert
+    name: caps-selfsigned-issuer
+  secretName: $(CAPS_WEBHOOK_SERVICE_NAME)-cert

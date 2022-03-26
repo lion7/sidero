@@ -1,8 +1,7 @@
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: webhook-service
+  name: c-webhook-service
   namespace: system
 spec:
   ports:
