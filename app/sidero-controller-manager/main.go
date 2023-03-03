@@ -34,6 +34,7 @@ import (
 	metalv1alpha1 "github.com/siderolabs/sidero/app/sidero-controller-manager/api/v1alpha1"
 	metalv1alpha2 "github.com/siderolabs/sidero/app/sidero-controller-manager/api/v1alpha2"
 	"github.com/siderolabs/sidero/app/sidero-controller-manager/controllers"
+	"github.com/siderolabs/sidero/app/sidero-controller-manager/internal/dhcp"
 	"github.com/siderolabs/sidero/app/sidero-controller-manager/internal/ipxe"
 	"github.com/siderolabs/sidero/app/sidero-controller-manager/internal/metadata"
 	"github.com/siderolabs/sidero/app/sidero-controller-manager/internal/power/api"
@@ -224,6 +225,16 @@ func main() {
 	// +kubebuilder:scaffold:builder
 
 	errCh := make(chan error)
+
+	setupLog.Info("starting proxy DHCP server")
+
+	go func() {
+		if err := dhcp.ServeDHCP(); err != nil {
+			setupLog.Error(err, "unable to start proxy DHCP server", "controller", "Environment")
+		}
+
+		errCh <- err
+	}()
 
 	setupLog.Info("starting TFTP server")
 
